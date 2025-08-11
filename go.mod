@@ -1,4 +1,4 @@
-module katsu2d-simple-demo
+module github.com/edwinsyarief/katsu2d-simple-demo
 
 go 1.24.6
 
