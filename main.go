@@ -3,10 +3,13 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"the-mountains/assets"
 
 	ebimath "github.com/edwinsyarief/ebi-math"
 	"github.com/edwinsyarief/katsu2d"
+	"github.com/edwinsyarief/katsu2d/utils"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
 var (
@@ -19,24 +22,38 @@ var (
 // BackgroundSystem is a DrawSystem for the engine, rendering a simple background color.
 type BackgroundSystem struct{}
 
-func (self *BackgroundSystem) Draw(e *katsu2d.Engine, renderer *katsu2d.BatchRenderer) {
+func (self *BackgroundSystem) Draw(w *katsu2d.World, renderer *katsu2d.BatchRenderer) {
 	// This system draws at the very bottom of the render stack.
 	renderer.GetScreen().Fill(color.RGBA{R: 50, G: 50, B: 50, A: 255})
 }
 
 // FPSSystem is a DrawSystem that draws the FPS counter as a global overlay.
-type FPSSystem struct{}
+type FPSSystem struct {
+	engine          *katsu2d.Engine
+	txtRenderSystem *katsu2d.TextRenderSystem
+}
 
-func (self *FPSSystem) Draw(e *katsu2d.Engine, renderer *katsu2d.BatchRenderer) {
+func NewFPSSystem(engine *katsu2d.Engine) *FPSSystem {
+	return &FPSSystem{
+		engine:          engine,
+		txtRenderSystem: katsu2d.NewTextRenderSystem(),
+	}
+}
+
+func (self *FPSSystem) Draw(world *katsu2d.World, renderer *katsu2d.BatchRenderer) {
 	// This system draws at the very top of the render stack.
-	text := katsu2d.NewText(
-		e.FontManager().Get(DefaultFontID),
+	txt := katsu2d.NewTextComponent(
+		self.engine.FontManager().Get(assets.AccidentalPresidencyFontID),
 		fmt.Sprintf("FPS %.2f", ebiten.ActualFPS()),
 		30,
 		color.RGBA{R: 255, G: 255, B: 255, A: 255})
 	t := ebimath.T()
 	t.SetPosition(ebimath.V(10, 10))
-	renderer.DrawText(text, t)
+
+	op := &text.DrawOptions{}
+	op.GeoM = t.Matrix()
+	op.ColorScale = utils.RGBAToColorScale(txt.Color)
+	text.Draw(renderer.GetScreen(), txt.Caption, txt.FontFace(), op)
 }
 
 func main() {
@@ -54,8 +71,9 @@ func setupGame() *katsu2d.Engine {
 		katsu2d.WithCursorMode(ebiten.CursorModeVisible),
 		katsu2d.WithClearScreenEachFrame(false),
 		katsu2d.WithBackgroundDrawSystem(&BackgroundSystem{}),
-		katsu2d.WithOverlayDrawSystem(&FPSSystem{}),
 	)
+
+	game.AddOverlayDrawSystem(NewFPSSystem(game))
 
 	game.InitFS(FS)
 	loadAssets(game)
@@ -63,7 +81,7 @@ func setupGame() *katsu2d.Engine {
 
 	// Create and add the scenes to the scene manager.
 	game.AddScene("intro", NewIntroScene())
-	game.AddScene("titleMenu", NewTitleMenuScene())
+	game.AddScene("titleMenu", NewTitleMenuScene(game.TextureManager()))
 
 	// Start the game by switching to the first scene.
 	game.SwitchScene("intro")
