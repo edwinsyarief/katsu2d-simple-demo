@@ -3,8 +3,8 @@ module github.com/edwinsyarief/katsu2d-simple-demo
 go 1.24.6
 
 require (
-	github.com/edwinsyarief/ebi-math v1.1.0
-	github.com/edwinsyarief/katsu2d v0.2.0
+	github.com/edwinsyarief/ebi-math v1.1.1
+	github.com/edwinsyarief/katsu2d v0.2.1
 	github.com/hajimehoshi/ebiten/v2 v2.8.8
 )
 
