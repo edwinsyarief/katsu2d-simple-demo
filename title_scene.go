@@ -23,7 +23,7 @@ func NewTitleMenuScene(tm *katsu2d.TextureManager) *katsu2d.Scene {
 	}
 
 	scene.AddSystem(titleMenuScene)
-	scene.AddSystem(katsu2d.NewSpriteRenderSystem(tm))
+	scene.AddSystem(katsu2d.NewSpriteRenderSystem(scene.World, tm))
 	scene.AddSystem(katsu2d.NewTextRenderSystem())
 
 	scene.OnEnter = titleMenuScene.OnEnter
