@@ -14,6 +14,8 @@ github.com/edwinsyarief/ebi-math v1.1.1 h1:wj4t7rhq+SoNgD4Kzr422CqSsZWpY9YyBCaRG
 github.com/edwinsyarief/ebi-math v1.1.1/go.mod h1:paIJ2BnRy0HRH2DOTQM/3iy0lQceveoi9pxrLseU22I=
 github.com/edwinsyarief/katsu2d v0.3.0 h1:w/RvSa0DhgR1/4hwNt65+3jtZj4bkK/SYdxHCONllZk=
 github.com/edwinsyarief/katsu2d v0.3.0/go.mod h1:VKW2g7YDtxJTerh0tmMQN1hAYeI4F3UFao6E0A/X5y0=
+github.com/edwinsyarief/katsu2d v0.3.1 h1:Zfv7stbjuf9uM0TGlXmygbuaNuMPfAdeYfPe3d0uVI0=
+github.com/edwinsyarief/katsu2d v0.3.1/go.mod h1:VKW2g7YDtxJTerh0tmMQN1hAYeI4F3UFao6E0A/X5y0=
 github.com/go-text/typesetting v0.3.0 h1:OWCgYpp8njoxSRpwrdd1bQOxdjOXDj9Rqart9ML4iF4=
 github.com/go-text/typesetting v0.3.0/go.mod h1:qjZLkhRgOEYMhU9eHBr3AR4sfnGJvOXNLt8yRAySFuY=
 github.com/go-text/typesetting-utils v0.0.0-20241103174707-87a29e9e6066 h1:qCuYC+94v2xrb1PoS4NIDe7DGYtLnU2wWiQe9a1B1c0=
