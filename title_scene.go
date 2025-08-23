@@ -38,7 +38,8 @@ func (self *TitleMenuScene) OnEnter(e *katsu2d.Engine) {
 	// Add a sprite to the scene's world.
 	sprite := self.world.CreateEntity()
 	self.world.AddComponent(sprite, katsu2d.NewTransformComponent())
-	s := katsu2d.NewSpriteComponent(0, 32, 32)
+	img := e.TextureManager().Get(0)
+	s := katsu2d.NewSpriteComponent(0, img.Bounds())
 	s.Color = color.RGBA{R: 0, G: 255, B: 0, A: 255}
 	self.world.AddComponent(sprite, s)
 	tx, _ := self.world.GetComponent(sprite, katsu2d.CTTransform)
