@@ -3,7 +3,6 @@ package main
 import (
 	"image/color"
 	"log"
-	"the-mountains/assets"
 
 	ebimath "github.com/edwinsyarief/ebi-math"
 	"github.com/edwinsyarief/katsu2d"
@@ -50,7 +49,7 @@ func (self *TitleMenuScene) OnEnter(e *katsu2d.Engine) {
 	instructions := self.world.CreateEntity()
 	self.world.AddComponent(instructions, katsu2d.NewTransformComponent())
 	self.world.AddComponent(instructions,
-		katsu2d.NewTextComponent(e.FontManager().Get(assets.AccidentalPresidencyFontID),
+		katsu2d.NewTextComponent(e.FontManager().Get(DefaultFontID),
 			"Press Enter to start!", 24, color.RGBA{R: 255, G: 255, B: 255, A: 255}).
 			SetAlignment(katsu2d.TextAlignmentMiddleCenter))
 

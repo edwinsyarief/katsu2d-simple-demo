@@ -1,10 +1,10 @@
 module github.com/edwinsyarief/katsu2d-simple-demo
 
-go 1.24.6
+go 1.25.1
 
 require (
-	github.com/edwinsyarief/ebi-math v1.1.1
-	github.com/edwinsyarief/katsu2d v0.4.0
+	github.com/edwinsyarief/ebi-math v1.2.3
+	github.com/edwinsyarief/katsu2d v0.5.9
 	github.com/hajimehoshi/ebiten/v2 v2.8.8
 )
 
@@ -20,9 +20,8 @@ require (
 	github.com/jezek/xgb v1.1.1 // indirect
 	github.com/jfreymuth/oggvorbis v1.0.5 // indirect
 	github.com/jfreymuth/vorbis v1.0.2 // indirect
-	golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b // indirect
-	golang.org/x/image v0.30.0 // indirect
-	golang.org/x/sync v0.16.0 // indirect
-	golang.org/x/sys v0.35.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/image v0.31.0 // indirect
+	golang.org/x/sync v0.17.0 // indirect
+	golang.org/x/sys v0.36.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
 )

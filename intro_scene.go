@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"the-mountains/assets"
 
 	ebimath "github.com/edwinsyarief/ebi-math"
 	"github.com/edwinsyarief/katsu2d"
@@ -41,7 +40,7 @@ func (self *IntroScene) OnEnter(e *katsu2d.Engine) {
 	splashText := self.world.CreateEntity()
 	self.world.AddComponent(splashText, katsu2d.NewTransformComponent())
 	self.world.AddComponent(splashText,
-		katsu2d.NewTextComponent(e.FontManager().Get(assets.AccidentalPresidencyFontID),
+		katsu2d.NewTextComponent(e.FontManager().Get(DefaultFontID),
 			"Loading...", 48, color.RGBA{R: 255, G: 255, B: 255, A: 255}).
 			SetAlignment(katsu2d.TextAlignmentMiddleCenter))
 

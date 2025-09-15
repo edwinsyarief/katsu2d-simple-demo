@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"image/color"
-	"the-mountains/assets"
 
 	ebimath "github.com/edwinsyarief/ebi-math"
 	"github.com/edwinsyarief/katsu2d"
@@ -43,7 +42,7 @@ func NewFPSSystem(engine *katsu2d.Engine) *FPSSystem {
 func (self *FPSSystem) Draw(world *katsu2d.World, renderer *katsu2d.BatchRenderer) {
 	// This system draws at the very top of the render stack.
 	txt := katsu2d.NewTextComponent(
-		self.engine.FontManager().Get(assets.AccidentalPresidencyFontID),
+		self.engine.FontManager().Get(DefaultFontID),
 		fmt.Sprintf("FPS %.2f", ebiten.ActualFPS()),
 		30,
 		color.RGBA{R: 255, G: 255, B: 255, A: 255})
