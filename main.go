@@ -28,14 +28,12 @@ func (self *BackgroundSystem) Draw(w *katsu2d.World, renderer *katsu2d.BatchRend
 
 // FPSSystem is a DrawSystem that draws the FPS counter as a global overlay.
 type FPSSystem struct {
-	engine          *katsu2d.Engine
-	txtRenderSystem *katsu2d.TextRenderSystem
+	engine *katsu2d.Engine
 }
 
 func NewFPSSystem(engine *katsu2d.Engine) *FPSSystem {
 	return &FPSSystem{
-		engine:          engine,
-		txtRenderSystem: katsu2d.NewTextRenderSystem(),
+		engine: engine,
 	}
 }
 
