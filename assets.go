@@ -8,7 +8,6 @@ const (
 
 var (
 	EbitengineLogoTextureID = UnknownID
-	DefaultFontID           = UnknownID
 )
 
 //go:embed all:assets

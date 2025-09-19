@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	screenWidth  = 640
-	screenHeight = 480
+	screenWidth  = 800
+	screenHeight = 600
 )
 
 // --- ENGINE-LEVEL SYSTEMS (DRAWN BEFORE AND AFTER THE SCENE) ---
@@ -41,9 +41,8 @@ func NewFPSSystem(engine *katsu2d.Engine) *FPSSystem {
 
 func (self *FPSSystem) Draw(world *katsu2d.World, renderer *katsu2d.BatchRenderer) {
 	// This system draws at the very top of the render stack.
-	txt := katsu2d.NewTextComponent(
-		self.engine.FontManager().Get(DefaultFontID),
-		fmt.Sprintf("FPS %.2f", ebiten.ActualFPS()),
+	txt := katsu2d.NewDefaultTextComponent(
+		fmt.Sprintf("FPS: %.2f", ebiten.ActualFPS()),
 		30,
 		color.RGBA{R: 255, G: 255, B: 255, A: 255})
 	t := ebimath.T()
@@ -91,9 +90,6 @@ func setupGame() *katsu2d.Engine {
 func loadAssets(e *katsu2d.Engine) {
 	// textures
 	EbitengineLogoTextureID = e.TextureManager().LoadEmbedded("assets/images/ebitengine_logo.png")
-
-	// fonts
-	DefaultFontID = e.FontManager().LoadEmbedded("assets/fonts/default.ttf")
 }
 
 func runGame(game *katsu2d.Engine) {

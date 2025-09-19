@@ -23,7 +23,10 @@ func NewIntroScene() *katsu2d.Scene {
 
 	// Add the systems specific to this scene.
 	scene.AddSystem(introScene)
-	scene.AddSystem(katsu2d.NewTextRenderSystem())
+	ls := katsu2d.NewLayerSystem(scene.World, screenWidth, screenHeight,
+		katsu2d.AddSystem(katsu2d.NewTextRenderSystem()),
+	)
+	scene.AddSystem(ls)
 
 	// Add the lifecycle hooks.
 	scene.OnEnter = introScene.OnEnter
@@ -40,7 +43,7 @@ func (self *IntroScene) OnEnter(e *katsu2d.Engine) {
 	splashText := self.world.CreateEntity()
 	self.world.AddComponent(splashText, katsu2d.NewTransformComponent())
 	self.world.AddComponent(splashText,
-		katsu2d.NewTextComponent(e.FontManager().Get(DefaultFontID),
+		katsu2d.NewDefaultTextComponent(
 			"Loading...", 48, color.RGBA{R: 255, G: 255, B: 255, A: 255}).
 			SetAlignment(katsu2d.TextAlignmentMiddleCenter))
 
