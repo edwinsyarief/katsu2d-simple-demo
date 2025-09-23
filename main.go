@@ -49,7 +49,7 @@ func (self *FPSSystem) Draw(world *katsu2d.World, renderer *katsu2d.BatchRendere
 	op := &text.DrawOptions{}
 	op.GeoM = t.Matrix()
 	op.ColorScale = utils.RGBAToColorScale(txt.Color)
-	text.Draw(renderer.GetScreen(), txt.Caption, txt.FontFace(), op)
+	text.Draw(renderer.GetScreen(), txt.Caption, txt.FontFace, op)
 }
 
 func main() {
