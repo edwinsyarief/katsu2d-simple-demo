@@ -7,6 +7,7 @@ import (
 	ebimath "github.com/edwinsyarief/ebi-math"
 	"github.com/edwinsyarief/katsu2d"
 	"github.com/edwinsyarief/katsu2d/utils"
+	"github.com/edwinsyarief/lazyecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
@@ -21,7 +22,7 @@ var (
 // BackgroundSystem is a DrawSystem for the engine, rendering a simple background color.
 type BackgroundSystem struct{}
 
-func (self *BackgroundSystem) Draw(w *katsu2d.World, renderer *katsu2d.BatchRenderer) {
+func (self *BackgroundSystem) Draw(_ *lazyecs.World, renderer *katsu2d.BatchRenderer) {
 	// This system draws at the very bottom of the render stack.
 	renderer.GetScreen().Fill(color.RGBA{R: 50, G: 50, B: 50, A: 255})
 }
@@ -37,7 +38,7 @@ func NewFPSSystem(engine *katsu2d.Engine) *FPSSystem {
 	}
 }
 
-func (self *FPSSystem) Draw(world *katsu2d.World, renderer *katsu2d.BatchRenderer) {
+func (self *FPSSystem) Draw(world *lazyecs.World, renderer *katsu2d.BatchRenderer) {
 	// This system draws at the very top of the render stack.
 	txt := katsu2d.NewDefaultTextComponent(
 		fmt.Sprintf("FPS: %.2f", ebiten.ActualFPS()),

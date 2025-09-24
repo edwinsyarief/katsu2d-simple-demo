@@ -6,13 +6,14 @@ import (
 
 	ebimath "github.com/edwinsyarief/ebi-math"
 	"github.com/edwinsyarief/katsu2d"
+	"github.com/edwinsyarief/lazyecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 // TitleMenuScene shows a menu and waits for user input.
 type TitleMenuScene struct {
-	world *katsu2d.World
+	world *lazyecs.World
 }
 
 func NewTitleMenuScene(tm *katsu2d.TextureManager) *katsu2d.Scene {
@@ -22,8 +23,8 @@ func NewTitleMenuScene(tm *katsu2d.TextureManager) *katsu2d.Scene {
 	}
 
 	scene.AddSystem(titleMenuScene)
-	ls := katsu2d.NewLayerSystem(scene.World, 640, 480,
-		katsu2d.AddSystem(katsu2d.NewSpriteRenderSystem(scene.World, tm)),
+	ls := katsu2d.NewLayerSystem(640, 480,
+		katsu2d.AddSystem(katsu2d.NewSpriteRenderSystem(tm)),
 		katsu2d.AddSystem(katsu2d.NewTextRenderSystem()),
 	)
 	scene.AddSystem(ls)
@@ -39,46 +40,50 @@ func (self *TitleMenuScene) OnEnter(e *katsu2d.Engine) {
 
 	// Add a sprite to the scene's world.
 	sprite := self.world.CreateEntity()
-	self.world.AddComponent(sprite, katsu2d.NewTransformComponent())
+
+	t := katsu2d.TransformComponent{}
+	t.Init()
+	t.SetPosition(ebimath.V2(100))
+	t.SetOffset(ebimath.V2(25))
+	lazyecs.SetComponent(self.world, sprite, t)
+
 	img := e.TextureManager().Get(0)
-	s := katsu2d.NewSpriteComponent(0, img.Bounds())
+	s := katsu2d.SpriteComponent{}
+	s.Init(0, img.Bounds())
 	s.Color = color.RGBA{R: 0, G: 255, B: 0, A: 255}
 	s.DstW = 50
 	s.DstH = 50
-	self.world.AddComponent(sprite, s)
-	tx, _ := self.world.GetComponent(sprite, katsu2d.CTTransform)
-	t := tx.(*katsu2d.TransformComponent)
-	t.SetPosition(ebimath.V2(100))
-	t.SetOffset(ebimath.V2(25))
+	lazyecs.SetComponent(self.world, sprite, s)
 
 	// Add text for instructions.
 	instructions := self.world.CreateEntity()
-	self.world.AddComponent(instructions, katsu2d.NewTransformComponent())
-	self.world.AddComponent(instructions,
-		katsu2d.NewDefaultTextComponent(
-			"Press Enter to start!", 25, color.RGBA{R: 255, G: 255, B: 255, A: 255}).
-			SetAlignment(katsu2d.TextAlignmentMiddleCenter))
 
-	// Center the splash text.
-	itx, _ := self.world.GetComponent(instructions, katsu2d.CTTransform)
-	it := itx.(*katsu2d.TransformComponent)
+	it := katsu2d.TransformComponent{}
+	it.Init()
 	it.SetPosition(ebimath.V(float64(640)/2, float64(480)/2))
+	lazyecs.SetComponent(self.world, instructions, it)
+
+	lazyecs.SetComponent(self.world, instructions, *katsu2d.NewDefaultTextComponent(
+		"Press Enter to start!", 25, color.RGBA{R: 255, G: 255, B: 255, A: 255}).
+		SetAlignment(katsu2d.TextAlignmentMiddleCenter))
+
 }
 
 func (self *TitleMenuScene) OnExit(e *katsu2d.Engine) {
 	println("Exiting TitleMenuScene...")
 }
 
-func (self *TitleMenuScene) Update(w *katsu2d.World, dt float64) {
+func (self *TitleMenuScene) Update(w *lazyecs.World, dt float64) {
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		log.Println("User pressed Enter. This would start the game.")
 		// We could switch to a "GameScene" here.
 	}
 
-	entities := w.Query(katsu2d.CTSprite)
-	for _, e := range entities {
-		tAny, _ := w.GetComponent(e, katsu2d.CTTransform)
-		t := tAny.(*katsu2d.TransformComponent)
-		t.Rotate(ebimath.ToRadians(0.5))
+	query := w.Query(katsu2d.CTSprite)
+	for query.Next() {
+		for _, entity := range query.Entities() {
+			t, _ := lazyecs.GetComponent[katsu2d.TransformComponent](self.world, entity)
+			t.Rotate(ebimath.ToRadians(0.5))
+		}
 	}
 }
